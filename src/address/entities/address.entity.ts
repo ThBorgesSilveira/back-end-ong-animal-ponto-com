@@ -1,7 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
-
 export class AddressEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,7 +9,10 @@ export class AddressEntity {
   createdAt: Date;
 
   @UpdateDateColumn()
-  updateAt: Date;
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 
   @Column({
     type: "boolean",
@@ -53,15 +55,16 @@ export class AddressEntity {
   @Column({
     type: "varchar",
     length: 10,
+    nullable: true,
   })
-  number: string;
+  number?: string;
 
   @Column({
     type: "varchar",
     length: 150,
     nullable: true,
   })
-  complement: string;
+  complement?: string;
 
   @Column({
     type: "char",
