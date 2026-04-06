@@ -3,22 +3,22 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedCol
 @Entity()
 export class AddressEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deletedAt!: Date;
 
   @Column({
     type: "boolean",
     default: true,
   })
-  status: boolean;
+  status!: boolean;
 
   @Column({
     type: "char",
@@ -26,31 +26,31 @@ export class AddressEntity {
     name: "country_code",
     default: "BR",
   })
-  countryCode: string;
+  countryCode!: string;
 
   @Column({
     type: "varchar",
     length: 50,
   })
-  state: string;
+  state!: string;
 
   @Column({
     type: "varchar",
     length: 100,
   })
-  city: string;
+  city!: string;
 
   @Column({
     type: "varchar",
     length: 100,
   })
-  district: string;
+  district!: string;
 
   @Column({
     type: "varchar",
     length: 150,
   })
-  street: string;
+  street!: string;
 
   @Column({
     type: "varchar",
@@ -71,5 +71,5 @@ export class AddressEntity {
     length: 8,
     name: "postal_code",
   })
-  postalCode: string;
+  postalCode!: string;
 }

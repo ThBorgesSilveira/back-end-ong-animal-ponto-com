@@ -3,23 +3,23 @@ import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
 export class CreateAddressDto {
     @IsString()
     @IsNotEmpty()
-    countryCode: string;
+    countryCode!: string;
 
     @IsString()
     @IsNotEmpty()
-    state: string;
+    state!: string;
 
     @IsString()
     @IsNotEmpty()
-    city: string;
+    city!: string;
 
     @IsString()
     @IsNotEmpty()
-    district: string;
+    district!: string;
 
     @IsString()
     @IsNotEmpty()
-    street: string;
+    street!: string;
 
     @IsString()
     number?: string;
@@ -29,5 +29,5 @@ export class CreateAddressDto {
 
     @IsString()
     @IsNotEmpty()
-    postalCode: string;
+    postalCode!: string;
 }

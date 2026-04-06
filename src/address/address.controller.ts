@@ -9,16 +9,6 @@ export class AddressController {
     private readonly addressService: AddressService
   ) {}
 
-  @Get('all')
-  async getAll() {
-      return await this.addressService.getAll();
-  }
-
-  @Get(':id')
-  async getOne(@Param('id') id: number) {
-      return await this.addressService.getOne(id);
-  }
-
   @Post()
   create(@Body() body: CreateAddressDto) {
     return this.addressService.create(body);
@@ -32,5 +22,15 @@ export class AddressController {
   @Delete(':id')
   delete(@Param('id') id: number) {
     return this.addressService.delete(id);
+  }
+
+  @Get('all')
+  async getAll() {
+      return await this.addressService.getAll();
+  }
+
+  @Get(':id')
+  async getOne(@Param('id') id: number) {
+      return await this.addressService.getOne(id);
   }
 }

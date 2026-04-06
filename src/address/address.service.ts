@@ -22,19 +22,6 @@ export class AddressService {
         return await this.addressRepository.save(address);
     }
 
-    async getAll() {
-        const addresses = await this.addressRepository.find();
-        return addresses;
-    }
-
-    async getOne(id: number) {
-        const address = await this.addressRepository.findOne({ where: { id } });
-        if (!address) {
-            throw new NotFoundException('Address not found');
-        }
-        return address;
-    }
-
     async update(id: number, body: UpdateAddressDto) {
         const address = await this.addressRepository.findOne({
             where: { id }
@@ -55,5 +42,18 @@ export class AddressService {
         }
 
         return { message: 'Address soft deleted successfully' };
+    }
+
+    async getAll() {
+        const addresses = await this.addressRepository.find();
+        return addresses;
+    }
+
+    async getOne(id: number) {
+        const address = await this.addressRepository.findOne({ where: { id } });
+        if (!address) {
+            throw new NotFoundException('Address not found');
+        }
+        return address;
     }
 }

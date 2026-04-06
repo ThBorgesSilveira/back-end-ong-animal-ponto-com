@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddressModule } from './address/address.module';
+import { EventosModule } from './eventos/eventos.module';
 
 @Module({
   imports: [
@@ -14,9 +15,11 @@ import { AddressModule } from './address/address.module';
       password: 'postgres',
       database: 'animalpontocom',
       autoLoadEntities: true,
-      synchronize: true
+      synchronize: true,
+      logging: true
     }),
     AddressModule,
+    EventosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
