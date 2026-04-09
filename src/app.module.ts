@@ -3,7 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddressModule } from './address/address.module';
-import { EventosModule } from './eventos/eventos.module';
+import { ScheduleEventModule } from './schedule-event/schedule-event.module';
+import { PersonModule } from './person/person.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { EventosModule } from './eventos/eventos.module';
       logging: true
     }),
     AddressModule,
-    EventosModule,
+    ScheduleEventModule,
+    PersonModule,
   ],
   controllers: [AppController],
   providers: [AppService],

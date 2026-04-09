@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { AddressEntity } from './entities/address.entity';
+import { Address } from './entities/address.entity';
 import { Repository } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAddressDto } from './dto/create-address.dto';
@@ -8,11 +8,11 @@ import { UpdateAddressDto } from './dto/update-address.dto';
 @Injectable()
 export class AddressService {
     constructor(
-        @InjectRepository(AddressEntity)
-        private readonly addressRepository: Repository<AddressEntity>,
+        @InjectRepository(Address)
+        private readonly addressRepository: Repository<Address>,
     ) {}
 
-    async create(body: CreateAddressDto): Promise<AddressEntity> {
+    async create(body: CreateAddressDto): Promise<Address> {
         const newAdress = {
             ...body
         }
