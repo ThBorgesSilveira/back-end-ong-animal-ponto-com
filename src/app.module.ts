@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddressModule } from './address/address.module';
 import { ScheduleEventModule } from './schedule-event/schedule-event.module';
 import { PersonModule } from './person/person.module';
+import { VolunteerModule } from './volunteer/volunteer.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { PersonModule } from './person/person.module';
     AddressModule,
     ScheduleEventModule,
     PersonModule,
+    VolunteerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

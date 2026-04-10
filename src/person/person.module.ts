@@ -10,5 +10,6 @@ import { AddressModule } from '../address/address.module';
               AddressModule],
   controllers: [PersonController],
   providers: [PersonService],
+  exports: [PersonService],
 })
 export class PersonModule {}
