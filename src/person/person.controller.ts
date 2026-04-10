@@ -12,23 +12,23 @@ export class PersonController {
     return this.personService.create(createPersonDto);
   }
 
-  @Get()
-  findAll() {
-    return this.personService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.personService.findOne(+id);
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto) {
     return this.personService.update(+id, updatePersonDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.personService.remove(+id);
+  delete(@Param('id') id: string) {
+    return this.personService.delete(+id);
+  }
+
+  @Get('all')
+  async findAll() {
+    return this.personService.getAll();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.personService.getOne(+id);
   }
 }

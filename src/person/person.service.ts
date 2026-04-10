@@ -1,26 +1,79 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePersonDto } from './dto/create-person.dto';
-import { UpdatePersonDto } from './dto/update-person.dto';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Person } from "./entities/person.entity";
+import { Repository } from "typeorm";
+import { AddressService } from "../address/address.service";
+import { CreatePersonDto } from "./dto/create-person.dto";
+import { UpdatePersonDto } from "./dto/update-person.dto";
 
 @Injectable()
 export class PersonService {
-  create(createPersonDto: CreatePersonDto) {
-    return 'This action adds a new person';
+  constructor(
+    @InjectRepository(Person)
+    private readonly personRepository: Repository<Person>,
+    private readonly addressService: AddressService
+  ) {}
+
+  async create(body: CreatePersonDto): Promise<Person> {
+    const address = await this.addressService.getOne(body.addressId);
+
+    if (!address) {
+      throw new NotFoundException('Endereço não encontrado');
+    }
+
+    const person = this.personRepository.create(body);
+    return this.personRepository.save(person);
   }
 
-  findAll() {
-    return `This action returns all person`;
+  async update(id: number, body: UpdatePersonDto): Promise<Person> {
+    const person = await this.personRepository.findOne({
+      where: { id }
+    });
+
+    if (!person) {
+      throw new NotFoundException('Pessoa não encontrada');
+    }
+
+    if (body.addressId !== undefined) {
+      const address = await this.addressService.getOne(body.addressId);
+
+      if (!address) {
+        throw new NotFoundException('Endereço não encontrado');
+      }
+    }
+
+    const updatedPerson = this.personRepository.merge(person, body);
+    return this.personRepository.save(updatedPerson);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} person`;
+  async delete(id: number) {
+    const person = await this.personRepository.findOne({ where: { id } });
+
+    if (!person) {
+      throw new NotFoundException('Pessoa não encontrada');
+    }
+
+    await this.personRepository.softDelete(id);
+
+    return { message: 'Pessoa removida com sucesso' };
   }
 
-  update(id: number, updatePersonDto: UpdatePersonDto) {
-    return `This action updates a #${id} person`;
+  async getAll() {
+    return this.personRepository.find({
+      relations: ['address']
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} person`;
+  async getOne(id: number) {
+    const person = await this.personRepository.findOne({
+      where: { id },
+      relations: ['address']
+    });
+
+    if (!person) {
+      throw new NotFoundException('Pessoa não encontrada');
+    }
+
+    return person;
   }
 }

@@ -15,11 +15,11 @@ export class CreateScheduleEventDto {
 
   @IsString()
   @IsOptional()
-  observations?: string;
+  notes?: string;
 
   @IsBoolean()
   @IsOptional()
-  status?: boolean;
+  isActive?: boolean;
 
   @IsNumber()
   @IsNotEmpty()

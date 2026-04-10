@@ -20,7 +20,7 @@ export class ScheduleEvent {
       type: "boolean",
       default: true,
     })
-    status!: boolean;
+    isActive!: boolean;
   
     @Column({
       type: "varchar",
