@@ -6,6 +6,8 @@ import { AddressModule } from './address/address.module';
 import { ScheduleEventModule } from './schedule-event/schedule-event.module';
 import { PersonModule } from './person/person.module';
 import { VolunteerModule } from './volunteer/volunteer.module';
+import { AnimalModule } from './animal/animal.module';
+import { PartnerModule } from './partner/partner.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { VolunteerModule } from './volunteer/volunteer.module';
     ScheduleEventModule,
     PersonModule,
     VolunteerModule,
+    AnimalModule,
+    PartnerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
