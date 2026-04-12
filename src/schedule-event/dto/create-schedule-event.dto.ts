@@ -7,11 +7,11 @@ export class CreateScheduleEventDto {
 
   @IsDateString()
   @IsNotEmpty()
-  dateEvent!: string;
+  eventDate!: string;
 
   @IsString()
   @IsNotEmpty()
-  typeEvent!: string;
+  eventType!: string;
 
   @IsString()
   @IsOptional()

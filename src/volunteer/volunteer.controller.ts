@@ -12,16 +12,6 @@ export class VolunteerController {
     return this.volunteerService.create(createVolunteerDto);
   }
 
-  @Get('all')
-  findAll() {
-    return this.volunteerService.getAll();
-  }
-
-  @Get(':id')
-  getOne(@Param('id') id: string) {
-    return this.volunteerService.getOne(+id);
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateVolunteerDto: UpdateVolunteerDto) {
     return this.volunteerService.update(+id, updateVolunteerDto);
@@ -30,5 +20,15 @@ export class VolunteerController {
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.volunteerService.delete(+id);
+  }
+
+  @Get('all')
+  findAll() {
+    return this.volunteerService.getAll();
+  }
+
+  @Get(':id')
+  getOne(@Param('id') id: string) {
+    return this.volunteerService.getOne(+id);
   }
 }
