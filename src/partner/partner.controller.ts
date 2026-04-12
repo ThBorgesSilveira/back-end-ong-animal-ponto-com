@@ -12,23 +12,23 @@ export class PartnerController {
     return this.partnerService.create(createPartnerDto);
   }
 
-  @Get()
-  findAll() {
-    return this.partnerService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.partnerService.findOne(+id);
-  }
-
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePartnerDto: UpdatePartnerDto) {
+  async update(@Param('id') id: string, @Body() updatePartnerDto: UpdatePartnerDto) {
     return this.partnerService.update(+id, updatePartnerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.partnerService.remove(+id);
+  async delete(@Param('id') id: string) {
+    return this.partnerService.delete(+id);
+  }
+
+  @Get('all')
+  async findAll() {
+    return this.partnerService.getAll();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.partnerService.getOne(+id);
   }
 }
