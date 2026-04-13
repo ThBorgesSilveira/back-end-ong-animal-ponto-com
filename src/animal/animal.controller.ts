@@ -23,12 +23,12 @@ export class AnimalController {
   }
 
   @Get('all')
-  async findAll() {
-    return this.animalService.getAll();
+  async getAll() {
+    return await this.animalService.getAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.animalService.getOne(+id);
+  async getOne(@Param('id') id: string) {
+    return await this.animalService.getOne(+id);
   }
 }

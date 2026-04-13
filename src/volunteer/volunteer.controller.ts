@@ -23,12 +23,12 @@ export class VolunteerController {
   }
 
   @Get('all')
-  findAll() {
-    return this.volunteerService.getAll();
+  async getAll() {
+    return await this.volunteerService.getAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string) {
-    return this.volunteerService.getOne(+id);
+  async getOne(@Param('id') id: string) {
+    return await this.volunteerService.getOne(+id);
   }
 }

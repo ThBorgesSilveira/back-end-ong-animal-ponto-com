@@ -8,6 +8,7 @@ import { PersonModule } from './person/person.module';
 import { VolunteerModule } from './volunteer/volunteer.module';
 import { AnimalModule } from './animal/animal.module';
 import { PartnerModule } from './partner/partner.module';
+import { SponsorModule } from './sponsor/sponsor.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PartnerModule } from './partner/partner.module';
     VolunteerModule,
     AnimalModule,
     PartnerModule,
+    SponsorModule,
   ],
   controllers: [AppController],
   providers: [AppService],

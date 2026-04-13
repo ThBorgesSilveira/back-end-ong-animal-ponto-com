@@ -23,12 +23,12 @@ export class PartnerController {
   }
 
   @Get('all')
-  async findAll() {
-    return this.partnerService.getAll();
+  async getAll() {
+    return await this.partnerService.getAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.partnerService.getOne(+id);
+  async getOne(@Param('id') id: string) {
+    return await this.partnerService.getOne(+id);
   }
 }

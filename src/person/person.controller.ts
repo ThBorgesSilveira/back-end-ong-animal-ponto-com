@@ -23,12 +23,12 @@ export class PersonController {
   }
 
   @Get('all')
-  async findAll() {
-    return this.personService.getAll();
+  async getAll() {
+    return await this.personService.getAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.personService.getOne(+id);
+  async getOne(@Param('id') id: string) {
+    return await this.personService.getOne(+id);
   }
 }

@@ -737,6 +737,128 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Sponsor",
+      "item": [
+        {
+          "name": "update",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"personId\": 3,\r\n  \"age\": 32,\r\n  \"notes\": \"Contribui regularmente e participa de eventos da ONG.\",\r\n  \"amount\": 120.50,\r\n  \"recurrence\": \"Mensal\",\r\n  \"email\": \"joao.silva@example.com\",\r\n  \"phone\": \"48 99999-1234\",\r\n  \"socialNetwork\": \"@joaosilva\",\r\n  \"billingType\": \"Cartão de Crédito\",\r\n  \"billingData\": \"Visa final 1234\",\r\n  \"isActive\": true\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/sponsor/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "sponsor",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"personId\": 1,\r\n  \"age\": 32,\r\n  \"notes\": \"Contribui regularmente e participa de eventos da ONG.\",\r\n  \"amount\": 120.50,\r\n  \"recurrence\": \"Mensal\",\r\n  \"email\": \"joao.silva@example.com\",\r\n  \"phone\": \"48 99999-1234\",\r\n  \"socialNetwork\": \"@joaosilva\",\r\n  \"billingType\": \"Cartão de Crédito\",\r\n  \"billingData\": \"Visa final 1234\",\r\n  \"isActive\": true\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/sponsor",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "sponsor"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/sponsor/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "sponsor",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/sponsor/all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "sponsor",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getOne",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/sponsor/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "sponsor",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }

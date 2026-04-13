@@ -24,11 +24,11 @@ export class ScheduleEventController {
 
   @Get('all')
   async getAll() {
-    return this.scheduleEventService.getAll();
+    return await this.scheduleEventService.getAll();
   }
 
   @Get(':id')
   async getOne(@Param('id') id: number) {
-    return this.scheduleEventService.getOne(+id);
+    return await this.scheduleEventService.getOne(+id);
   }
 }
