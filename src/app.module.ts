@@ -12,6 +12,7 @@ import { SponsorModule } from './sponsor/sponsor.module';
 import { SponsorAnimalModule } from './sponsor-animal/sponsor-animal.module';
 import { DonationModule } from './donation/donation.module';
 import { AdopterModule } from './adopter/adopter.module';
+import { AdoptionRequestModule } from './adoption-request/adoption-request.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { AdopterModule } from './adopter/adopter.module';
     SponsorAnimalModule,
     DonationModule,
     AdopterModule,
+    AdoptionRequestModule,
   ],
   controllers: [AppController],
   providers: [AppService],

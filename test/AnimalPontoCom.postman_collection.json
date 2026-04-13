@@ -1225,6 +1225,128 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "AdoptionRequest",
+      "item": [
+        {
+          "name": "update",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"personId\": 1,\r\n  \"animalId\": 5,\r\n  \"notes\": \"Família com experiência em cães de porte médio.\",\r\n  \"status\": \"pending\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/adoption-request/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "adoption-request",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"personId\": 1,\r\n  \"animalId\": 2,\r\n  \"notes\": \"Família com experiência em cães de porte médio.\",\r\n  \"status\": \"pending\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/adoption-request",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "adoption-request"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/adoption-request/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "adoption-request",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAll",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/adoption-request/all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "adoption-request",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getOne",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/adoption-request/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "adoption-request",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }
