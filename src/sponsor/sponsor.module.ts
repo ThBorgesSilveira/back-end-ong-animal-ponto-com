@@ -10,5 +10,6 @@ import { PersonModule } from '../person/person.module';
             PersonModule],
   controllers: [SponsorController],
   providers: [SponsorService],
+  exports: [SponsorService]
 })
 export class SponsorModule {}

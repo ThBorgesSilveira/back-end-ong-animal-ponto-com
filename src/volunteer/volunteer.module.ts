@@ -7,7 +7,7 @@ import { PersonModule } from '../person/person.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Volunteer]),
-              PersonModule],
+            PersonModule],
   controllers: [VolunteerController],
   providers: [VolunteerService],
 })
