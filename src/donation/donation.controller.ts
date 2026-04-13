@@ -23,12 +23,12 @@ export class DonationController {
   }
 
   @Get('all')
-  getAll() {
-    return this.donationService.getAll();
+  async getAll() {
+    return await this.donationService.getAll();
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string) {
-    return this.donationService.getOne(+id);
+  async getOne(@Param('id') id: string) {
+    return await this.donationService.getOne(+id);
   }
 }

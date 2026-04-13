@@ -24,11 +24,11 @@ export class SponsorAnimalController {
 
   @Get('all')
   async getAll() {
-    return this.sponsorAnimalService.getAll();
+    return await this.sponsorAnimalService.getAll();
   }
 
   @Get(':id')
   async getOne(@Param('id') id: string) {
-    return this.sponsorAnimalService.getOne(+id);
+    return await this.sponsorAnimalService.getOne(+id);
   }
 }
