@@ -10,6 +10,7 @@ import { AnimalModule } from './animal/animal.module';
 import { PartnerModule } from './partner/partner.module';
 import { SponsorModule } from './sponsor/sponsor.module';
 import { SponsorAnimalModule } from './sponsor-animal/sponsor-animal.module';
+import { DonationModule } from './donation/donation.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { SponsorAnimalModule } from './sponsor-animal/sponsor-animal.module';
     PartnerModule,
     SponsorModule,
     SponsorAnimalModule,
+    DonationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
