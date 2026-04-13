@@ -57,4 +57,11 @@ export class Animal {
     nullable: true,
   })
   notes!: string;
+
+  @Column({
+    type: "varchar",
+    length: 500,
+    nullable: true,
+  })
+  photoUrl!: string;
 }
