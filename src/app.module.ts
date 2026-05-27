@@ -14,6 +14,7 @@ import { DonationModule } from './donation/donation.module';
 import { AdopterModule } from './adopter/adopter.module';
 import { AdoptionRequestModule } from './adoption-request/adoption-request.module';
 import { SeedService } from './seed/seed.service';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { SeedService } from './seed/seed.service';
     DonationModule,
     AdopterModule,
     AdoptionRequestModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService, SeedService],

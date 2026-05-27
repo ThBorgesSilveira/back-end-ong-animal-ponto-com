@@ -1,27 +1,63 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Partner } from "./entities/partner.entity";
 import { CreatePartnerDto } from "./dto/create-partner.dto";
 import { UpdatePartnerDto } from "./dto/update-partner.dto";
 import { PersonService } from "../person/person.service";
+import { AddressService } from "../address/address.service";
+import { CreateAddressDto } from "../address/dto/create-address.dto";
 
 @Injectable()
 export class PartnerService {
   constructor(
     @InjectRepository(Partner)
     private readonly partnerRepository: Repository<Partner>,
-    private readonly personService: PersonService
+    private readonly personService: PersonService,
+		private readonly addressService: AddressService
   ) {}
 
   async create(body: CreatePartnerDto): Promise<Partner> {
-    const person = await this.personService.getOne(body.personId);
+    const normalizedCpfCnpj = body.person.cpfCnpj.replace(/\D/g, "").slice(0, 20);
 
-    if (!person) {
-      throw new NotFoundException("Pessoa não encontrada");
+    const existingPersonId = await this.personService.findByCpfCnpj(normalizedCpfCnpj);
+    if (existingPersonId) {
+      throw new ConflictException("Pessoa já cadastrada");
     }
 
-    const partner = this.partnerRepository.create(body);
+    const normalizedPostalCode = body.person.address.postalCode.replace(/\D/g, "").slice(0, 8);
+
+    const addressPayload: CreateAddressDto = {
+      countryCode: "BR",
+      state: body.person.address.state,
+      city: body.person.address.city,
+      district: body.person.address.district,
+      street: body.person.address.street,
+      number: body.person.address.number ?? "",
+      postalCode: normalizedPostalCode,
+    };
+
+    let addressId = await this.addressService.findByFields(addressPayload);
+    if (!addressId) {
+      const newAddress = await this.addressService.create(addressPayload);
+      addressId = newAddress.id;
+    }
+
+    const person = await this.personService.create({
+      name: body.person.name,
+      personType: "FISICA",
+      cpfCnpj: normalizedCpfCnpj,
+      addressId,
+    });
+
+    const partner = this.partnerRepository.create({
+      personId: person.id,
+      corporateName: body.corporateName,
+      tradeName: body.tradeName,
+      notes: body.notes,
+      isActive: body.isActive,
+    });
+
     return this.partnerRepository.save(partner);
   }
 
@@ -34,7 +70,7 @@ export class PartnerService {
       throw new NotFoundException("Parceiro não encontrado");
     }
 
-    if (body.personId !== undefined) {
+    if (body.person !== undefined) {
       const person = await this.personService.getOne(body.personId);
 
       if (!person) {

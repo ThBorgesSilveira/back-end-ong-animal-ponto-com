@@ -56,4 +56,19 @@ export class AddressService {
         }
         return address;
     }
+    
+    async findByFields(body: CreateAddressDto): Promise<number | null> {
+        const address = await this.addressRepository.findOne({
+            where: {
+                postalCode: body.postalCode,
+                street: body.street,
+                number: body.number,
+                complement: body.complement,
+            },
+        });
+
+        if (!address) return null;
+
+        return address.id;
+    }
 }

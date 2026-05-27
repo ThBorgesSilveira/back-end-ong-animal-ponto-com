@@ -90,4 +90,14 @@ export class PersonService {
 
     return person;
   }
+
+  async findByCpfCnpj(cpfCnpj: string): Promise<number | null> {
+    const person = await this.personRepository.findOne({
+      where: { cpfCnpj },
+    });
+
+    if (!person) return null;
+
+    return person.id;
+  }
 }
