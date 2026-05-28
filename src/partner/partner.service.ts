@@ -62,23 +62,31 @@ export class PartnerService {
   }
 
   async update(id: number, body: UpdatePartnerDto): Promise<Partner> {
-    const partner = await this.partnerRepository.findOne({
-      where: { id }
-    });
+    const partner = await this.partnerRepository.findOne({ where: { id } });
 
-    if (!partner) {
-      throw new NotFoundException("Parceiro não encontrado");
-    }
+    if (!partner) throw new NotFoundException("Parceiro não encontrado");
 
-    if (body.person !== undefined) {
-      const person = await this.personService.getOne(body.personId);
+    if (body.person?.cpfCnpj) {
+      const normalizedCpfCnpj = body.person.cpfCnpj.replace(/\D/g, "").slice(0, 20);
 
-      if (!person) {
-        throw new NotFoundException("Pessoa não encontrada");
+      const personId = await this.personService.findByCpfCnpj(normalizedCpfCnpj);
+
+      if (!personId) {
+        throw new NotFoundException(`Pessoa com CPF/CNPJ ${normalizedCpfCnpj} não encontrada`);
+      }
+
+      if (personId !== partner.personId) {
+        partner.personId = personId;
       }
     }
 
-    const updatedPartner = this.partnerRepository.merge(partner, body);
+    const updatedPartner = this.partnerRepository.merge(partner, {
+      corporateName: body.corporateName,
+      tradeName: body.tradeName,
+      notes: body.notes,
+      isActive: body.isActive,
+    });
+
     return this.partnerRepository.save(updatedPartner);
   }
 
