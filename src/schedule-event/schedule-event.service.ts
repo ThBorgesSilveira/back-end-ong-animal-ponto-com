@@ -21,7 +21,10 @@ export class ScheduleEventService {
       throw new NotFoundException('Endereço não encontrado');
     }
 
-    const scheduleEvent = this.scheduleEventRepository.create(body);
+    const scheduleEvent = this.scheduleEventRepository.create({
+      ...body,
+      addressId: address.id,
+    });
     return this.scheduleEventRepository.save(scheduleEvent);
   }
 
@@ -40,7 +43,10 @@ export class ScheduleEventService {
       }
     }
 
-    const updateScheduleEvent = await this.scheduleEventRepository.merge(scheduleEvent, body);
+    const updateScheduleEvent = await this.scheduleEventRepository.merge(scheduleEvent, {
+      ...body,
+      addressId: body.addressId ?? scheduleEvent.addressId,
+    });
 
     return await this.scheduleEventRepository.save(updateScheduleEvent);
   }

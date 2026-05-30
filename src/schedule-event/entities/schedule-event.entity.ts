@@ -44,7 +44,10 @@ export class ScheduleEvent {
     })
     notes?: string;
   
-    @ManyToOne(() => Address)
+    @ManyToOne(() => Address, { nullable: true })
     @JoinColumn({ name: "address_id" })
-    address!: Address;
+    address?: Address;
+
+    @Column({ name: "address_id", nullable: true })
+    addressId?: number;
 }

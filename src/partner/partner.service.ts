@@ -1,8 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Partner } from "./entities/partner.entity";
-import { CreatePartnerDto } from "./dto/create-partner.dto";
+import { CreatePartnerDto, CreatePartnerPersonDto } from "./dto/create-partner.dto";
 import { UpdatePartnerDto } from "./dto/update-partner.dto";
 import { PersonService } from "../person/person.service";
 import { AddressService } from "../address/address.service";
@@ -14,33 +14,58 @@ export class PartnerService {
     @InjectRepository(Partner)
     private readonly partnerRepository: Repository<Partner>,
     private readonly personService: PersonService,
-		private readonly addressService: AddressService
+    private readonly addressService: AddressService
   ) {}
 
-  async create(body: CreatePartnerDto): Promise<Partner> {
-    const normalizedCpfCnpj = body.person.cpfCnpj.replace(/\D/g, "").slice(0, 20);
+  private normalizeCpf(cpfCnpj: string) {
+    return cpfCnpj.replace(/\D/g, "").slice(0, 20);
+  }
 
-    const existingPersonId = await this.personService.findByCpfCnpj(normalizedCpfCnpj);
-    if (existingPersonId) {
-      throw new ConflictException("Pessoa já cadastrada");
-    }
-
-    const normalizedPostalCode = body.person.address.postalCode.replace(/\D/g, "").slice(0, 8);
+  private async resolveAddress(address: CreatePartnerPersonDto["address"]) {
+    const normalizedPostalCode = address.postalCode.replace(/\D/g, "").slice(0, 8);
 
     const addressPayload: CreateAddressDto = {
       countryCode: "BR",
-      state: body.person.address.state,
-      city: body.person.address.city,
-      district: body.person.address.district,
-      street: body.person.address.street,
-      number: body.person.address.number ?? "",
+      state: address.state,
+      city: address.city,
+      district: address.district,
+      street: address.street,
+      number: address.number ?? "",
       postalCode: normalizedPostalCode,
     };
 
-    let addressId = await this.addressService.findByFields(addressPayload);
-    if (!addressId) {
-      const newAddress = await this.addressService.create(addressPayload);
-      addressId = newAddress.id;
+    const existingAddressId = await this.addressService.findByFields(addressPayload);
+    if (existingAddressId) return existingAddressId;
+
+    const createdAddress = await this.addressService.create(addressPayload);
+    return createdAddress.id;
+  }
+
+  async create(body: CreatePartnerDto): Promise<Partner> {
+    const normalizedCpfCnpj = this.normalizeCpf(body.person.cpfCnpj);
+    const addressId = await this.resolveAddress(body.person.address);
+
+    const existingPersonId = await this.personService.findByCpfCnpj(normalizedCpfCnpj);
+    const existingPartner = existingPersonId
+      ? await this.partnerRepository.findOne({ where: { personId: existingPersonId } })
+      : null;
+
+    if (existingPartner) {
+      const updatedPartner = await this.partnerRepository.merge(existingPartner, {
+        corporateName: body.corporateName,
+        tradeName: body.tradeName,
+        notes: body.notes,
+        isActive: body.isActive,
+      });
+
+      await this.personService.update(existingPartner.personId, {
+        name: body.person.name,
+        personType: "FISICA",
+        cpfCnpj: normalizedCpfCnpj,
+        addressId,
+      });
+
+      return this.partnerRepository.save(updatedPartner);
     }
 
     const person = await this.personService.create({
@@ -64,20 +89,26 @@ export class PartnerService {
   async update(id: number, body: UpdatePartnerDto): Promise<Partner> {
     const partner = await this.partnerRepository.findOne({ where: { id } });
 
-    if (!partner) throw new NotFoundException("Parceiro não encontrado");
+    if (!partner) throw new NotFoundException("Parceiro nao encontrado");
 
-    if (body.person?.cpfCnpj) {
-      const normalizedCpfCnpj = body.person.cpfCnpj.replace(/\D/g, "").slice(0, 20);
+    if (body.person) {
+      const currentPerson = await this.personService.getOne(partner.personId);
+      const normalizedCpfCnpj = body.person.cpfCnpj
+        ? this.normalizeCpf(body.person.cpfCnpj)
+        : currentPerson.cpfCnpj;
 
-      const personId = await this.personService.findByCpfCnpj(normalizedCpfCnpj);
+      let addressId = currentPerson.addressId;
 
-      if (!personId) {
-        throw new NotFoundException(`Pessoa com CPF/CNPJ ${normalizedCpfCnpj} não encontrada`);
+      if (body.person.address) {
+        addressId = await this.resolveAddress(body.person.address);
       }
 
-      if (personId !== partner.personId) {
-        partner.personId = personId;
-      }
+      await this.personService.update(partner.personId, {
+        name: body.person.name ?? currentPerson.name,
+        personType: "FISICA",
+        cpfCnpj: normalizedCpfCnpj,
+        addressId,
+      });
     }
 
     const updatedPartner = this.partnerRepository.merge(partner, {
@@ -94,7 +125,7 @@ export class PartnerService {
     const partner = await this.partnerRepository.findOne({ where: { id } });
 
     if (!partner) {
-      throw new NotFoundException("Parceiro não encontrado");
+      throw new NotFoundException("Parceiro nao encontrado");
     }
 
     await this.partnerRepository.softDelete(id);
@@ -104,18 +135,18 @@ export class PartnerService {
 
   async getAll() {
     return this.partnerRepository.find({
-      relations: ["person"]
+      relations: ["person", "person.address"],
     });
   }
 
   async getOne(id: number) {
     const partner = await this.partnerRepository.findOne({
       where: { id },
-      relations: ["person"]
+      relations: ["person", "person.address"],
     });
 
     if (!partner) {
-      throw new NotFoundException("Parceiro não encontrado");
+      throw new NotFoundException("Parceiro nao encontrado");
     }
 
     return partner;
