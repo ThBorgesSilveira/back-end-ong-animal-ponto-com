@@ -4,10 +4,12 @@ import { AdopterController } from './adopter.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Adopter } from './entities/adopter.entity';
 import { PersonModule } from '../person/person.module';
+import { AddressModule } from '../address/address.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Adopter]),
-            PersonModule],
+            PersonModule,
+            AddressModule],
   controllers: [AdopterController],
   providers: [AdopterService],
 })
