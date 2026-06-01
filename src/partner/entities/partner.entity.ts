@@ -1,5 +1,6 @@
 import {Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 import { Person } from "../../person/entities/person.entity";
+import { PartnerType } from "../enums/partner-type.enum";
 
 @Entity()
 export class Partner {
@@ -40,6 +41,13 @@ export class Partner {
     nullable: true,
   })
   tradeName!: string;
+
+  @Column({
+    type: "enum",
+    enum: PartnerType,
+    nullable: false,
+  })
+  partnershipType!: PartnerType;
 
   @ManyToOne(() => Person)
   @JoinColumn({ name: "person_id" })

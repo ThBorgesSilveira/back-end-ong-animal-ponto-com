@@ -1,5 +1,6 @@
 import {Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 import { Address } from "../../address/entities/address.entity";
+import { PersonType } from "../enums/person-type.enum";
 
 @Entity()
 export class Person {
@@ -28,10 +29,10 @@ export class Person {
   name!: string;
 
   @Column({
-    type: "varchar",
-    length: 50,
+    type: "enum",
+    enum: PersonType
   })
-  personType!: string;
+  personType!: PersonType;
 
   @Column({
     type: "varchar",
