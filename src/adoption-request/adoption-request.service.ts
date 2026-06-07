@@ -17,49 +17,57 @@ export class AdoptionRequestService {
   ) {}
 
   async create(body: CreateAdoptionRequestDto): Promise<AdoptionRequest> {
-    const person = await this.personService.getOne(body.personId);
-    if (!person) {
-      throw new NotFoundException("Pessoa não encontrada");
-    }
-
-    const animal = await this.animalService.getOne(body.animalId);
-    if (!animal) {
-      throw new NotFoundException("Animal não encontrado");
-    }
-
-    const request = this.adoptionRequestRepository.create({
+    return this.adoptionRequestRepository.save({
       ...body,
       status: body.status ?? EnumAdoptionRequestStatus.PENDING,
     });
+    // const person = await this.personService.getOne(body.adopter);
+    // if (!person) {
+    //   throw new NotFoundException("Pessoa não encontrada");
+    // }
 
-    return this.adoptionRequestRepository.save(request);
+    // const animal = await this.animalService.getOne(body.animalId);
+    // if (!animal) {
+    //   throw new NotFoundException("Animal não encontrado");
+    // }
+
+    // const request = this.adoptionRequestRepository.create({
+    //   ...body,
+    //   status: body.status ?? EnumAdoptionRequestStatus.PENDING,
+    // });
+
+    // return this.adoptionRequestRepository.save(request);
   }
 
   async update(id: number, body: UpdateAdoptionRequestDto): Promise<AdoptionRequest> {
-    const request = await this.adoptionRequestRepository.findOne({
-      where: { id }
+    return this.adoptionRequestRepository.save({
+      id,
+      ...body,
     });
+    // const request = await this.adoptionRequestRepository.findOne({
+    //   where: { id }
+    // });
 
-    if (!request) {
-      throw new NotFoundException("Solicitação de adoção não encontrada");
-    }
+    // if (!request) {
+    //   throw new NotFoundException("Solicitação de adoção não encontrada");
+    // }
 
-    if (body.personId !== undefined) {
-      const person = await this.personService.getOne(body.personId);
-      if (!person) {
-        throw new NotFoundException("Pessoa não encontrada");
-      }
-    }
+    // if (body.personId !== undefined) {
+    //   const person = await this.personService.getOne(body.personId);
+    //   if (!person) {
+    //     throw new NotFoundException("Pessoa não encontrada");
+    //   }
+    // }
 
-    if (body.animalId !== undefined) {
-      const animal = await this.animalService.getOne(body.animalId);
-      if (!animal) {
-        throw new NotFoundException("Animal não encontrado");
-      }
-    }
+    // if (body.animalId !== undefined) {
+    //   const animal = await this.animalService.getOne(body.animalId);
+    //   if (!animal) {
+    //     throw new NotFoundException("Animal não encontrado");
+    //   }
+    // }
 
-    const updated = this.adoptionRequestRepository.merge(request, body);
-    return this.adoptionRequestRepository.save(updated);
+    // const updated = this.adoptionRequestRepository.merge(request, body);
+    // return this.adoptionRequestRepository.save(updated);
   }
 
   async delete(id: number) {

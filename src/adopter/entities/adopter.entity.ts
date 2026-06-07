@@ -22,10 +22,10 @@ export class Adopter {
   isActive!: boolean;
 
   @Column({
-    type: "int",
+    type: "date",
     nullable: true,
   })
-  age!: number;
+  birthDate!: Date;
 
   @Column({
     type: "text",

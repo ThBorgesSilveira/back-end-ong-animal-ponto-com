@@ -112,7 +112,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/address/1",
+              "raw": "http://localhost:3000/address/8",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -120,7 +120,7 @@
               "port": "3000",
               "path": [
                 "address",
-                "1"
+                "8"
               ]
             }
           },
@@ -260,7 +260,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"personId\": 3,\r\n  \"corporateName\": \"Associação Amigos dos Animais\",\r\n  \"tradeName\": \"Amigos Pet\",\r\n  \"notes\": \"Parceiro desde 2020. Contribui com doações mensais.\"\r\n}\r\n",
+              "raw": "{\r\n  \"person\": {\r\n    \"name\": \"João da Silva\",\r\n    \"cpfCnpj\": \"99999999999\",\r\n    \"address\": {\r\n      \"state\": \"SC\",\r\n      \"city\": \"Criciúma\",\r\n      \"district\": \"Centro\",\r\n      \"street\": \"Rua das Flores\",\r\n      \"number\": \"123\",\r\n      \"postalCode\": \"88801000\"\r\n    }\r\n  },\r\n  \"corporateName\": \"Empresa Exemplo Atualizada\",\r\n  \"tradeName\": \"Exemplo Pet Atualizado\",\r\n  \"notes\": \"Parceiro desde 2024\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -268,7 +268,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/partner/1",
+              "raw": "http://localhost:3000/partner/4",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -276,7 +276,7 @@
               "port": "3000",
               "path": [
                 "partner",
-                "1"
+                "4"
               ]
             }
           },
@@ -289,7 +289,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"personId\": 5,\r\n  \"corporateName\": \"Associação Amigos dos Animais\",\r\n  \"tradeName\": \"Amigos Pet\",\r\n  \"notes\": \"Parceiro desde 2020. Contribui com doações mensais.\"\r\n}\r\n",
+              "raw": "{\r\n  \"person\": {\r\n    \"name\": \"João da Silva\",\r\n    \"personType\": \"FISICA\",\r\n    \"cpfCnpj\": \"39393939393939\",\r\n    \"address\": {\r\n      \"state\": \"SC\",\r\n      \"city\": \"Criciúma\",\r\n      \"district\": \"Centro\",\r\n      \"street\": \"Rua das Rosas\",\r\n      \"number\": \"123\",\r\n      \"postalCode\": \"88800000\"\r\n    }\r\n  },\r\n  \"partnershipType\": \"Patrocínio de eventos\",\r\n  \"corporateName\": \"João da Silva ME\",\r\n  \"tradeName\": \"Comércio Silva\",\r\n  \"notes\": \"Cliente preferencial\",\r\n  \"isActive\": true\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -356,7 +356,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/partner/1",
+              "raw": "http://localhost:3000/partner/4",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -364,7 +364,7 @@
               "port": "3000",
               "path": [
                 "partner",
-                "1"
+                "4"
               ]
             }
           },
@@ -411,7 +411,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"João da Silva\",\r\n  \"personType\": \"Física\",\r\n  \"cpfCnpj\": \"12345678903\",\r\n  \"addressId\": 1\r\n}\r\n",
+              "raw": "{\r\n  \"name\": \"João da Silva Severino\",\r\n  \"personType\": \"FISICA\",\r\n  \"cpfCnpj\": \"12345678903\",\r\n  \"addressId\": 1\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -478,7 +478,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/person/1",
+              "raw": "http://localhost:3000/person/2",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -486,7 +486,7 @@
               "port": "3000",
               "path": [
                 "person",
-                "1"
+                "2"
               ]
             }
           },

@@ -1,5 +1,5 @@
 import {Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
-import { Person } from "../../person/entities/person.entity";
+import { Adopter } from "../../adopter/entities/adopter.entity";
 import { Animal } from "../../animal/entities/animal.entity";
 
 export enum EnumAdoptionRequestStatus {
@@ -28,12 +28,12 @@ export class AdoptionRequest {
   })
   isActive!: boolean;
 
-  @ManyToOne(() => Person)
-  @JoinColumn({ name: "person_id" })
-  person!: Person;
+  @ManyToOne(() => Adopter)
+  @JoinColumn({ name: "adopter_id" })
+  adopter!: Adopter;
 
-  @Column({ name: "person_id" })
-  personId!: number;
+  @Column({ name: "adopter_id" })
+  adopterId!: number;
 
   @ManyToOne(() => Animal)
   @JoinColumn({ name: "animal_id" })
