@@ -15,6 +15,7 @@ import { AdopterModule } from './adopter/adopter.module';
 import { AdoptionRequestModule } from './adoption-request/adoption-request.module';
 import { SeedService } from './seed/seed.service';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,12 +24,13 @@ import { UserModule } from './user/user.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'postgres',
+      password: 'banco',
       database: 'animalpontocom',
       autoLoadEntities: true,
       synchronize: true,
       logging: true
     }),
+    AuthModule,  
     AddressModule,
     ScheduleEventModule,
     PersonModule,
