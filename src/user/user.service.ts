@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserRole } from './entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -21,8 +22,11 @@ export class UserService {
       throw new ConflictException('Email ja cadastrado');
     }
 
+    const passwordHash = await bcrypt.hash(createUserDto.password, 10);
+
     const user = this.userRepository.create({
       ...createUserDto,
+      password: passwordHash,
       role: createUserDto.role ?? UserRole.ADMIN,
       isActive: createUserDto.isActive ?? true,
     });
@@ -61,6 +65,10 @@ export class UserService {
       if (existingUser) {
         throw new ConflictException('Email ja cadastrado');
       }
+    }
+
+    if (updateUserDto.password) {
+      updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
     }
 
     const updated = this.userRepository.merge(user, {

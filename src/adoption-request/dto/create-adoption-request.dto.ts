@@ -1,20 +1,21 @@
-import {IsNotEmpty, IsNumber, IsOptional, IsString, IsEnum} from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, IsEnum, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
+import { CreateAdopterDto } from "../../adopter/dto/create-adopter.dto";
 import { EnumAdoptionRequestStatus } from "../entities/adoption-request.entity";
 
 export class CreateAdoptionRequestDto {
-  @IsNumber()
+  @ValidateNested()
+  @Type(() => CreateAdopterDto)
   @IsNotEmpty()
-  personId!: number;
+  adopter!: CreateAdopterDto;
 
   @IsNumber()
   @IsNotEmpty()
   animalId!: number;
 
   @IsString()
-  @IsOptional()
   notes?: string;
 
   @IsEnum(EnumAdoptionRequestStatus)
-  @IsOptional()
   status?: EnumAdoptionRequestStatus;
 }

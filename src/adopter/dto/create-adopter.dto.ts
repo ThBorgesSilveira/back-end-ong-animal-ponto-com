@@ -1,4 +1,4 @@
-import {IsString, IsBoolean, IsOptional, IsNotEmpty, IsNumber, Length, ValidateNested, IsEnum, IsPositive, IsEmail,} from "class-validator";
+import {IsString, IsOptional, IsNotEmpty, IsDateString, Length, ValidateNested, IsEnum, IsEmail,} from "class-validator";
 import { Type } from "class-transformer";
 import { PersonType } from "../../person/enums/person-type.enum";
 
@@ -52,10 +52,9 @@ export class CreateAdopterDto {
   @Type(() => CreateAdopterPersonDto)
   person!: CreateAdopterPersonDto;
 
-  @IsNumber()
+  @IsDateString()
   @IsOptional()
-  @IsPositive()
-  age?: number;
+  birthDate?: string;
 
   @IsString()
   @IsOptional()

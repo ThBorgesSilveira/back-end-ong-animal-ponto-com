@@ -15,6 +15,7 @@ import { AdopterModule } from './adopter/adopter.module';
 import { AdoptionRequestModule } from './adoption-request/adoption-request.module';
 import { SeedService } from './seed/seed.service';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { UserModule } from './user/user.module';
       synchronize: true,
       logging: true
     }),
+    AuthModule,  
     AddressModule,
     ScheduleEventModule,
     PersonModule,
