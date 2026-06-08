@@ -15,24 +15,32 @@ export class PersonService {
   ) {}
 
   async create(body: CreatePersonDto): Promise<Person> {
+  // Processo de criação da Person:
+  //  1. Verificar se já existe uma pessoa com o mesmo CPF/CNPJ
+  //    1.1. Caso exista, atualizar os dados (método update) e retornar a pessoa atualizada
+  //    1.2. Caso contrário, criar uma nova pessoa
+  //  2. Verificar se o endereço existe, caso contrário lançar NotFoundException
+  //  3. Gravar a pessoa e retornar a pessoa criada
+
+    const normalizedCpfCnpj = body.cpfCnpj.replace(/\D/g, "").slice(0, 20);
+
+    const existingPerson = await this.findByCpfCnpj(normalizedCpfCnpj);
+
+    if (existingPerson) {
+      const updateData: UpdatePersonDto = {
+        name: body.name,
+        personType: body.personType,
+        isActive: body.isActive,
+        addressId: body.addressId,
+      };
+
+      return this.update(existingPerson.id, updateData);
+    }
+
     const address = await this.addressService.getOne(body.addressId);
 
     if (!address) {
-      throw new NotFoundException("Endereco nao encontrado");
-    }
-
-    const existingPerson = await this.personRepository.findOne({
-      where: { cpfCnpj: body.cpfCnpj },
-    });
-
-    if (existingPerson) {
-      const updatedExistingPerson = this.personRepository.merge(existingPerson, {
-        name: body.name,
-        personType: body.personType,
-        addressId: body.addressId,
-      });
-
-      return this.personRepository.save(updatedExistingPerson);
+      throw new NotFoundException("Endereço não encontrado");
     }
 
     const person = this.personRepository.create(body);
@@ -40,19 +48,24 @@ export class PersonService {
   }
 
   async update(id: number, body: UpdatePersonDto): Promise<Person> {
+  // Processo de atualização da Person:
+  //  1. Verificar se a pessoa existe, caso contrário lançar NotFoundException
+  //  2. Se o body contiver addressId, verificar se o endereço existe, caso contrário lançar NotFoundException
+  //  3. Atualizar os dados da pessoa e retornar a pessoa atualizada
+
     const person = await this.personRepository.findOne({
       where: { id }
     });
 
     if (!person) {
-      throw new NotFoundException("Pessoa nao encontrada");
+      throw new NotFoundException("Pessoa não encontrada");
     }
 
     if (body.addressId !== undefined) {
       const address = await this.addressService.getOne(body.addressId);
 
       if (!address) {
-        throw new NotFoundException("Endereco nao encontrado");
+        throw new NotFoundException("Endereço não encontrado");
       }
     }
 
@@ -64,7 +77,7 @@ export class PersonService {
     const person = await this.personRepository.findOne({ where: { id } });
 
     if (!person) {
-      throw new NotFoundException("Pessoa nao encontrada");
+      throw new NotFoundException("Pessoa não encontrada");
     }
 
     await this.personRepository.softDelete(id);
@@ -85,19 +98,20 @@ export class PersonService {
     });
 
     if (!person) {
-      throw new NotFoundException("Pessoa nao encontrada");
+      throw new NotFoundException("Pessoa não encontrada");
     }
 
     return person;
   }
 
-  async findByCpfCnpj(cpfCnpj: string): Promise<number | null> {
+  async findByCpfCnpj(cpfCnpj: string): Promise<Person | null> {
+    const normalizedCpfCnpj = cpfCnpj.replace(/\D/g, "").slice(0, 20);
     const person = await this.personRepository.findOne({
-      where: { cpfCnpj },
+      where: { cpfCnpj: normalizedCpfCnpj },
     });
 
     if (!person) return null;
 
-    return person.id;
+    return person;
   }
 }
