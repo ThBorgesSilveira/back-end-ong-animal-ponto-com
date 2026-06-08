@@ -4,10 +4,12 @@ import { VolunteerController } from './volunteer.controller';
 import { Volunteer } from './entities/volunteer.entity';
 import { TypeOrmModule } from '@nestjs/typeorm/dist/typeorm.module';
 import { PersonModule } from '../person/person.module';
+import { AddressModule } from '../address/address.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Volunteer]),
-            PersonModule],
+            PersonModule,
+            AddressModule],
   controllers: [VolunteerController],
   providers: [VolunteerService],
 })

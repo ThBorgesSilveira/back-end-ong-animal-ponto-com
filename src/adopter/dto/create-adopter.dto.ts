@@ -54,6 +54,7 @@ export class CreateAdopterDto {
 
   @IsDateString()
   @IsOptional()
+  @Type(() => Date)
   birthDate?: string;
 
   @IsString()
