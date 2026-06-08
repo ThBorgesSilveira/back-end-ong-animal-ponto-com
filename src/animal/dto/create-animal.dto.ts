@@ -27,6 +27,10 @@ export class CreateAnimalDto {
   @IsOptional()
   notes?: string;
 
+  @IsString()
+  @IsOptional()
+  photoUrl?: string;
+
   @IsBoolean()
   @IsOptional()
   isActive?: boolean;
