@@ -112,14 +112,14 @@ export class AdopterService {
 
   async getAll() {
     return this.adopterRepository.find({
-      relations: ["person"]
+      relations: ["person", "person.address"]
     });
   }
 
   async getOne(id: number) {
     const adopter = await this.adopterRepository.findOne({
       where: { id },
-      relations: ["person"]
+      relations: ["person", "person.address"]
     });
 
     if (!adopter) {

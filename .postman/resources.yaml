@@ -1,0 +1,7 @@
+# Use this workspace to collaborate
+workspace:
+  id: 8bffeecb-648f-4c96-8f2b-c19980e0e706
+
+localResources:
+  collections:
+    - ..\test\AnimalPontoCom.postman_collection.json
